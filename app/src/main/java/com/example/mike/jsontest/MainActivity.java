@@ -1,5 +1,6 @@
 package com.example.mike.jsontest;
 
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -42,33 +43,40 @@ public class MainActivity extends AppCompatActivity {
                         + "}"
                     + "]"
                 + "}";
-        
-        if (json != null) try {
+
+        try {
             JSONObject obj = new JSONObject(json);
 
             String name = obj.getString("name");
-            String age = obj.getString("age");
+            int age = obj.getInt("age");
 
             JSONObject ad = obj.getJSONObject("address");
             String streetAddress = ad.getString("streetAddress");
             String city = ad.getString("city");
 
-        /*  JSONArray phone = obj.getJSONArray("phoneNumber");
+            System.out.println(name);
+            System.out.println(age);
+            System.out.println(city);
+            System.out.println(streetAddress);
+
+            JSONArray phone = obj.getJSONArray("phoneNumber");
             for (int i = 0; i < phone.length(); i++) {
-
-            } */
-
-        } catch (final JSONException e) {
-        Log.e(TAG, "Json parsing error: " + e.getMessage());
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(),
-                        "Json parsing error: " + e.getMessage(),
-                        Toast.LENGTH_LONG).show();
+                JSONObject object = phone.getJSONObject(i);
+                String type = object.getString("type");
+                String number = object.getString("number");
+                System.out.println(type);
+                System.out.println(number);
             }
-        });
-
-
+        } catch (final JSONException e) {
+            Log.e(TAG, "Json parsing error: " + e.getMessage());
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),
+                            "Json parsing error: " + e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 }
